@@ -22,7 +22,7 @@ app.add_middleware(
 # 정적 파일 서빙 (로컬 + Vercel 공통)
 from fastapi.responses import FileResponse as _FR
 
-_pub = os.path.join(os.path.dirname(os.path.abspath(__file__)), "..", "public")
+_pub = os.path.join(os.path.dirname(os.path.abspath(__file__)), "static")
 
 
 @app.get("/")

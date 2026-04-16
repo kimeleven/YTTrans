@@ -1,0 +1,271 @@
+/* ── Reset & Variables ─────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --yt-red: #ff0000;
+  --yt-red-dark: #cc0000;
+  --bg: #f5f5f5;
+  --surface: #ffffff;
+  --border: #e0e0e0;
+  --text: #0f0f0f;
+  --text-secondary: #606060;
+  --radius: 8px;
+  --shadow: 0 1px 4px rgba(0,0,0,.10);
+}
+
+body {
+  font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── Header ──────────────────────────────────────────────────── */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 24px;
+}
+.header-inner { max-width: 860px; margin: 0 auto; }
+.logo {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--yt-red);
+  letter-spacing: -0.5px;
+}
+.subtitle {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  margin-top: 2px;
+}
+
+/* ── Main ────────────────────────────────────────────────────── */
+main {
+  max-width: 860px;
+  margin: 28px auto;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* ── Input Section ───────────────────────────────────────────── */
+.input-section {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+}
+.input-row {
+  display: flex;
+  gap: 10px;
+}
+.input-row input {
+  flex: 1;
+  padding: 10px 14px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color .15s;
+}
+.input-row input:focus { border-color: var(--yt-red); }
+
+/* ── Buttons ─────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, opacity .15s;
+  white-space: nowrap;
+}
+.btn-primary {
+  background: var(--yt-red);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--yt-red-dark); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+/* ── Spinner ─────────────────────────────────────────────────── */
+.spinner {
+  width: 16px; height: 16px;
+  border: 2px solid rgba(255,255,255,.4);
+  border-top-color: #fff;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+.spinner-sm {
+  display: inline-block;
+  width: 13px; height: 13px;
+  border: 2px solid rgba(0,0,0,.15);
+  border-top-color: var(--yt-red);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.hidden { display: none !important; }
+
+/* ── Error Banner ────────────────────────────────────────────── */
+.error-banner {
+  background: #fff3f3;
+  border: 1px solid #ffcccc;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  color: #c00;
+  font-size: 0.88rem;
+}
+
+/* ── Video Card ──────────────────────────────────────────────── */
+.video-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 20px;
+  display: grid;
+  grid-template-columns: 180px 1fr;
+  gap: 18px;
+  align-items: start;
+}
+.thumb {
+  width: 100%;
+  border-radius: 6px;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  background: #eee;
+}
+.video-meta { overflow: hidden; }
+.video-meta h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+.original-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: .5px;
+  margin-bottom: 6px;
+}
+.desc-text {
+  font-family: inherit;
+  font-size: 0.83rem;
+  color: var(--text-secondary);
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 150px;
+  overflow-y: auto;
+  line-height: 1.5;
+}
+
+/* ── Translations ────────────────────────────────────────────── */
+.translations {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+.translate-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 20px 0;
+}
+.translate-title {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.translate-loading {
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+/* ── Tabs ────────────────────────────────────────────────────── */
+.tab-nav {
+  display: flex;
+  border-bottom: 2px solid var(--border);
+  padding: 0 20px;
+  margin-top: 12px;
+  gap: 0;
+}
+.tab-btn {
+  padding: 9px 22px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  transition: color .15s, border-color .15s;
+}
+.tab-btn:hover { color: var(--text); }
+.tab-btn.active {
+  color: var(--yt-red);
+  border-bottom-color: var(--yt-red);
+}
+
+/* ── Tab Panels ──────────────────────────────────────────────── */
+.tab-panels { padding: 0 20px 20px; }
+.tab-panel { display: none; }
+.tab-panel.active { display: block; }
+
+.panel-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding: 12px 0 6px;
+}
+.copy-btn {
+  padding: 5px 14px;
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  background: var(--surface);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  color: var(--text-secondary);
+  transition: background .12s, color .12s;
+}
+.copy-btn:hover {
+  background: var(--yt-red);
+  color: #fff;
+  border-color: var(--yt-red);
+}
+.copy-btn.copied {
+  background: #16a34a;
+  color: #fff;
+  border-color: #16a34a;
+}
+
+.result-text {
+  font-family: inherit;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: var(--text);
+  max-height: 340px;
+  overflow-y: auto;
+}
+
+/* ── Responsive ──────────────────────────────────────────────── */
+@media (max-width: 600px) {
+  .video-card {
+    grid-template-columns: 1fr;
+  }
+  .thumb { max-width: 100%; }
+  .input-row { flex-direction: column; }
+  .btn { width: 100%; justify-content: center; }
+}
