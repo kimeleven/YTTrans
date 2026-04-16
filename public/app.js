@@ -60,9 +60,10 @@
 
   // ── Render translations ────────────────────────────────────
   function renderTranslations(data) {
-    document.getElementById('text-ko').textContent = data.ko || '(번역 결과 없음)';
-    document.getElementById('text-en').textContent = data.en || '(no translation)';
-    document.getElementById('text-ja').textContent = data.ja || '(翻訳結果なし)';
+    ['ko', 'en', 'ja'].forEach((lang) => {
+      document.getElementById(`title-${lang}`).textContent = data[lang]?.title || '';
+      document.getElementById(`text-${lang}`).textContent = data[lang]?.description || '';
+    });
     state.translations = data;
     translations.classList.remove('hidden');
   }
@@ -79,7 +80,8 @@
 
   // ── Copy ───────────────────────────────────────────────────
   async function copyTranslation(lang) {
-    const text = state.translations[lang];
+    const t = state.translations[lang];
+    const text = [t?.title, t?.description].filter(Boolean).join('\n\n');
     if (!text) return;
     const btn = document.querySelector(`.copy-btn[data-copy="${lang}"]`);
     try {
@@ -105,18 +107,12 @@
   }
 
   // ── Fetch translations ─────────────────────────────────────
-  async function fetchTranslations(text) {
-    if (!text || !text.trim()) {
-      document.getElementById('text-ko').textContent = '(설명 없음)';
-      document.getElementById('text-en').textContent = '(no description)';
-      document.getElementById('text-ja').textContent = '(説明なし)';
-      translations.classList.remove('hidden');
-      return;
-    }
+  async function fetchTranslations(title, text) {
     setTranslateLoading(true);
     try {
       const data = await apiPost('/api/translate', {
-        text,
+        title: title || '',
+        text: text || '',
         target_langs: ['ko', 'en', 'ja'],
       });
       renderTranslations(data);
@@ -143,7 +139,7 @@
     try {
       const data = await apiPost('/api/video', { url });
       renderVideoCard(data);
-      await fetchTranslations(data.description);
+      await fetchTranslations(data.title, data.description);
     } catch (err) {
       showError(err.message);
     } finally {

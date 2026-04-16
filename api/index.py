@@ -47,6 +47,7 @@ class VideoRequest(BaseModel):
 
 
 class TranslateRequest(BaseModel):
+    title: str
     text: str
     target_langs: list[str]
 
@@ -163,8 +164,12 @@ async def get_video(req: VideoRequest):
 
 @app.post("/api/translate")
 async def translate(req: TranslateRequest):
-    if not req.text.strip():
-        raise HTTPException(400, "번역할 텍스트가 없습니다.")
     if not req.target_langs:
         raise HTTPException(400, "target_langs를 하나 이상 지정해주세요.")
-    return {lang: translate_text(req.text, lang) for lang in req.target_langs}
+    result = {}
+    for lang in req.target_langs:
+        result[lang] = {
+            "title": translate_text(req.title, lang) if req.title.strip() else "",
+            "description": translate_text(req.text, lang) if req.text.strip() else "",
+        }
+    return result

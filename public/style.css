@@ -249,6 +249,14 @@ main {
   border-color: #16a34a;
 }
 
+.result-title {
+  font-size: 1rem;
+  font-weight: 700;
+  line-height: 1.4;
+  margin-bottom: 10px;
+  color: var(--text);
+}
+
 .result-text {
   font-family: inherit;
   font-size: 0.88rem;
