@@ -10,7 +10,7 @@
   <header>
     <div class="header-inner">
       <span class="logo">▶ YTTrans</span>
-      <p class="subtitle">YouTube 영상 설명을 한국어 · 영어 · 일본어로 번역합니다</p>
+      <p class="subtitle">YouTube 영상 제목·설명을 40개 언어로 번역합니다</p>
     </div>
   </header>
 
@@ -49,41 +49,27 @@
 
     <!-- 번역 결과 -->
     <section id="translations" class="translations hidden">
-      <div class="translate-header">
-        <span class="translate-title">번역 결과</span>
-        <span id="translate-loading" class="translate-loading hidden">
-          <span class="spinner-sm"></span> 번역 중...
-        </span>
-      </div>
+      <div class="trans-layout">
 
-      <nav class="tab-nav">
-        <button class="tab-btn active" data-lang="ko">한국어</button>
-        <button class="tab-btn" data-lang="en">English</button>
-        <button class="tab-btn" data-lang="ja">日本語</button>
-      </nav>
+        <!-- 왼쪽: 언어 사이드바 -->
+        <nav id="lang-nav" class="lang-nav">
+          <!-- JS로 생성 -->
+        </nav>
 
-      <div class="tab-panels">
-        <div class="tab-panel active" data-lang="ko">
-          <div class="panel-toolbar">
-            <button class="copy-btn" data-copy="ko">복사</button>
+        <!-- 오른쪽: 번역 결과 -->
+        <div class="trans-result">
+          <div id="trans-progress" class="trans-progress hidden">
+            <span class="spinner-sm"></span>
+            <span id="progress-text">번역 중...</span>
           </div>
-          <h3 id="title-ko" class="result-title"></h3>
-          <pre id="text-ko" class="result-text"></pre>
-        </div>
-        <div class="tab-panel" data-lang="en">
-          <div class="panel-toolbar">
-            <button class="copy-btn" data-copy="en">Copy</button>
+          <div class="result-toolbar">
+            <span id="active-lang-label" class="active-lang-label"></span>
+            <button id="copy-btn" class="copy-btn">복사</button>
           </div>
-          <h3 id="title-en" class="result-title"></h3>
-          <pre id="text-en" class="result-text"></pre>
+          <h3 id="result-title" class="result-title"></h3>
+          <pre id="result-desc" class="result-text"></pre>
         </div>
-        <div class="tab-panel" data-lang="ja">
-          <div class="panel-toolbar">
-            <button class="copy-btn" data-copy="ja">コピー</button>
-          </div>
-          <h3 id="title-ja" class="result-title"></h3>
-          <pre id="text-ja" class="result-text"></pre>
-        </div>
+
       </div>
     </section>
   </main>

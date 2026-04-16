@@ -1,5 +1,6 @@
 import os
 import re
+from concurrent.futures import ThreadPoolExecutor, as_completed
 
 import requests
 from dotenv import load_dotenv
@@ -166,10 +167,21 @@ async def get_video(req: VideoRequest):
 async def translate(req: TranslateRequest):
     if not req.target_langs:
         raise HTTPException(400, "target_langs를 하나 이상 지정해주세요.")
-    result = {}
-    for lang in req.target_langs:
-        result[lang] = {
-            "title": translate_text(req.title, lang) if req.title.strip() else "",
-            "description": translate_text(req.text, lang) if req.text.strip() else "",
-        }
+
+    def _do(lang: str) -> tuple[str, dict]:
+        try:
+            return lang, {
+                "title": translate_text(req.title, lang) if req.title.strip() else "",
+                "description": translate_text(req.text, lang) if req.text.strip() else "",
+            }
+        except Exception as e:
+            return lang, {"title": "", "description": f"[번역 실패: {e}]"}
+
+    workers = min(10, len(req.target_langs))
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        futures = {pool.submit(_do, lang): lang for lang in req.target_langs}
+        result = {}
+        for fut in as_completed(futures):
+            lang, data = fut.result()
+            result[lang] = data
     return result
