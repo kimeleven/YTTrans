@@ -19,24 +19,25 @@ app.add_middleware(
     allow_headers=["Content-Type"],
 )
 
-# 로컬 개발 시에만 public/ 정적 파일 서빙 (Vercel에선 CDN이 처리)
-# app.mount("/") 는 POST /api/* 를 가로채므로, 파일별 명시적 라우트를 사용
-if not os.getenv("VERCEL"):
-    from fastapi.responses import FileResponse as _FR
+# 정적 파일 서빙 (로컬 + Vercel 공통)
+from fastapi.responses import FileResponse as _FR
 
-    _pub = os.path.join(os.path.dirname(__file__), "..", "public")
+_pub = os.path.join(os.path.dirname(__file__), "..", "public")
 
-    @app.get("/")
-    def _index():
-        return _FR(os.path.join(_pub, "index.html"))
 
-    @app.get("/style.css")
-    def _css():
-        return _FR(os.path.join(_pub, "style.css"), media_type="text/css")
+@app.get("/")
+def _index():
+    return _FR(os.path.join(_pub, "index.html"))
 
-    @app.get("/app.js")
-    def _js():
-        return _FR(os.path.join(_pub, "app.js"), media_type="application/javascript")
+
+@app.get("/style.css")
+def _css():
+    return _FR(os.path.join(_pub, "style.css"), media_type="text/css")
+
+
+@app.get("/app.js")
+def _js():
+    return _FR(os.path.join(_pub, "app.js"), media_type="application/javascript")
 
 
 # ---------- Models ----------
